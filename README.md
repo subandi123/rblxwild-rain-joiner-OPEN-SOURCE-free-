@@ -4,7 +4,7 @@ its shit, using playwright ( browser related library )..
 # Some Advantage on the open source one
 1. Supports multiple accounts
 2.  could just write 1 in "howmanyshouldweopen" config, to join in 4 account or more, depends on ur pc
-3.  -Opensource
+3.  Opensource
 
 # How to use the free one
 1. run installer.bat
