@@ -12,7 +12,7 @@ its shit, using playwright ( browser related library )..
 3. run assa.py
 
 # Better one
-![ah](https://github.com/subandi123/rblxwild-rain-joiner-OPEN-SOURCE-free-/assets/74751653/cf17cfe8-9a77-4936-bdf3-95e2e6220909)
+![ah](https://github.com/subandi123/rblxwild-rain-joiner-OPEN-SOURCE-free-/assets/74751653/31198200-7703-4039-9929-b7facf9d8f6f)
 What is it making it better?
 1. Still support multiple accounts
 2. websocket based
