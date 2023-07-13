@@ -12,4 +12,5 @@ What is it making it better?
 1. Still support multiple accounts
 2. websocket based
 3. low cpu usage, u could put 20 account, and only waste 1% of ur cpu usage
+
 Join https://discord.gg/c3RnCsvV for it
