@@ -1,0 +1,9 @@
+{
+	"authorization": [
+      "token1",
+      "token2"
+    ],
+    "hcaptcha": {
+      "howmanyshouldweopen": 1
+    }
+}
