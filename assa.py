@@ -269,7 +269,6 @@ def registration():
                 element = lol.query_selector('[data-hcaptcha-response]')
                 response_value = element.get_attribute('data-hcaptcha-response')
                 zz.append({"token": response_value, "time": time.time()})
-                print(response_value)
             except Exception as e:
                 pass
 
