@@ -14,8 +14,8 @@ import requests
 from colorama import Fore
 from playwright.sync_api import sync_playwright
 from websocket import WebSocketApp, WebSocketException
+import cloudscraper
 import pygetwindow as gw
-
 
 zz = []
 
@@ -66,7 +66,7 @@ def keepalive(ws):
     while True:
         try:
             ws.send(f'42["time:requestSync",{{"clientTime":{time.time()}}}]')
-            time.sleep(1)
+            time.sleep(3)
         except:
             try:
                 ws.close()
@@ -80,6 +80,7 @@ def strip_msg(message):
         return json.loads(re.sub(r'\d+\{', '{', message))
     except:
         return json.loads(re.sub(r'\d+\[', '[', message))
+
 
 def checkusername(auth):
     user_data = None
@@ -123,7 +124,6 @@ def joinrain(authtoken, token, potid):
         "Accept-Language": "en-US,en;q=0.5",
         "Authorization": authtoken,
         "Origin": "https://rblxwild.com",
-        "Referer": "https://rblxwild.com/",
         "DNT": "1",
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
@@ -154,6 +154,7 @@ def joinrain(authtoken, token, potid):
         else:
             joinedplayer(f'Not Joined on account: : {checkusername(authtoken)}')
 
+
 def on_message(ws, msgs):
     msg = strip_msg(msgs)
     global rainAmount
@@ -169,8 +170,7 @@ def on_message(ws, msgs):
 
     elif type(msg) is list and msg[0] == "events:rain:setState":
         if msg[1]["newState"] == "ENDING":
-            rain(f'Joining Rain With Amount - {rainAmount}$ -')
-            time.sleep(25)  # delay
+            rain(f'Joining Rain With Amount - {rainAmount} -')
             with open("config.json", "r+") as data:
                 config = json.load(data)
                 auth = config["authorization"]
@@ -179,13 +179,14 @@ def on_message(ws, msgs):
                     b = zz[i]
                     c = pot_id
                     d = b['token']
-                    joinrain(a, d, c)
+                    threading.Thread(target=joinrain, args=(a, d, c)).start()
         elif msg[1]["newState"] == "ENDED":
             pot_id += 1
             information("Rain ended!")
 
 
 def on_open(_):
+    information("Connected")
     time.sleep(1)
     _.send("40")
     time.sleep(3)
@@ -230,7 +231,7 @@ def start():
                             reconnect=True)
         except WebSocketException as e:
             error(f'here websocket except error {e}')
-            time.sleep(5)
+            time.sleep(3)
             continue
 
 
@@ -240,12 +241,13 @@ def checknumberthatneedtoopen():
         lol = config['hcaptcha']['howmanyshouldweopen']
         return lol
 
+
 def registration():
     with sync_playwright() as pw:
         extension_path = os.path.join(os.getenv('TEMP'), 'hektCaptcha-v0.2.9')
         browser = pw.chromium.launch_persistent_context(
             "",
-            headless=False, ##extension dont work with headless
+            headless=False,  ##extension dont work with headless
             args=[
                 f"--disable-extensions-except={extension_path}",
                 f"--load-extension={extension_path}",
@@ -262,12 +264,12 @@ def registration():
                         "() => document.querySelector('[data-hcaptcha-response]').getAttribute('data-hcaptcha-response') !== ''",
                         timeout=40000)
                 except TimeoutError:
-                    pass
+                    print("eh")
 
                 element = lol.query_selector('[data-hcaptcha-response]')
                 response_value = element.get_attribute('data-hcaptcha-response')
                 zz.append({"token": response_value, "time": time.time()})
-                lol.goto("https://hcaptcha.projecttac.com/?sitekey=30a8dcf5-481e-40d1-88de-51ad22aa8e97")
+                print(response_value)
             except Exception as e:
                 pass
 
