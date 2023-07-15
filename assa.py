@@ -283,6 +283,7 @@ def cleanup_tokens():
 
 
 threading.Thread(target=start).start()
+threading.Thread(target=thehektcaptha).start()
 threading.Thread(target=cleanup_tokens).start()
 for i in range(checknumberthatneedtoopen()):
     thread = threading.Thread(target=registration)
